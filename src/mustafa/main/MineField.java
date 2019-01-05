@@ -7,6 +7,7 @@ public class MineField extends Map{
 	private String[][] tempField;
 	public Scanner input;
 	private Player player;
+	
 
 	public MineField() {
 		// TODO Auto-generated constructor stub
@@ -38,38 +39,57 @@ public class MineField extends Map{
 			}
 			System.out.println();
 		}
+		System.out.println("Mayin Sayisi : " + getNumberMine());
 	}
 	
 	
 	private void startGame() {
 		int round = getNumberMine();
-		int move, x, y;
+		int flag = getNumberMine();
+		int x, y, temp;
+		String move;
 		while(ifFinishGame(round)) {
 			move = player.makeMove(input);
-			x = ((move-1)/9);
-			y = ((move-1)%9);
-			if(ifLossGame(x, y)) {
-				tempField[x][y] = "BOM";
-				printField();
-				break;
+			temp = Integer.parseInt(move.substring(1 , move.length()));
+//			System.out.println(move.substring(0,1).toUpperCase());
+//			System.out.println(temp);
+			x = ((temp-1)/9);
+			y = ((temp-1)%9);
+			if(move.substring(0,1).toUpperCase().equals("M")) {
+				if(ifLossGame(x, y)) {
+					tempField[x][y] = "BOMM";
+					printField();
+					break;
+				}
+				if(tempField[x][y].toCharArray()[0] == 'M') {
+					tempField[x][y] = String.valueOf(choosingLoc(x, y));
+					printField();
+					System.out.println("Kalan flag : " + flag);
+					round++;
+				}
+				else
+					System.out.println("Girilen konum daha once secilmis");
 			}
-			if(tempField[x][y].toCharArray()[0] == 'M') {
-				tempField[x][y] = String.valueOf(choosingLoc(x, y));
+			else if(move.substring(0, 1).toUpperCase().equals("F")) {
+				if(tempField[x][y].substring(0, 1).equals("M")) {
+					tempField[x][y] = "F"+temp;
+					flag--;
+					
+				}
+				else if(tempField[x][y].substring(0, 1).equals("F")) {
+					tempField[x][y] = "M"+temp;
+					flag++;
+				}
+				else {
+					System.out.println("Hatali bir girdi.");
+				}
 				printField();
-				round++;
+				System.out.println("Kalan flag : " + flag);
 			}
 			else
-				System.out.println("Girilen konum daha once secilmis");
+				System.out.println("Hatali girdi...");
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
