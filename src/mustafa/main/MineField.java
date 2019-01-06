@@ -58,7 +58,7 @@ public class MineField extends Map{
 			if(move.substring(0,1).toUpperCase().equals("M")) {
 				if(ifLossGame(x, y)) {
 					tempField[x][y] = "BOMM";
-					printField();
+					finishTable();
 					break;
 				}
 				if(tempField[x][y].toCharArray()[0] == 'M') {
@@ -72,9 +72,12 @@ public class MineField extends Map{
 			}
 			else if(move.substring(0, 1).toUpperCase().equals("F")) {
 				if(tempField[x][y].substring(0, 1).equals("M")) {
-					tempField[x][y] = "F"+temp;
-					flag--;
-					
+					if(flag <= 0)
+						System.out.println("Flag hakkiniz kalmadi");
+					else {
+						tempField[x][y] = "F"+temp;
+						flag--;
+					}
 				}
 				else if(tempField[x][y].substring(0, 1).equals("F")) {
 					tempField[x][y] = "M"+temp;

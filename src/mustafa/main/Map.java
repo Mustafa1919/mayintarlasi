@@ -109,6 +109,19 @@ public class Map extends Logic{
 	}
 	
 	
+	public void finishTable() {
+		for(int i=0; i<table.length; i++) {
+			for(int j=0; j<table[i].length; j++) {
+				if(table[i][j] == 11)
+					System.out.printf("%5s","BOMM");
+				else
+					System.out.printf("%5d",table[i][j]);
+			}
+			System.out.println();
+		}
+	}
+	
+	
 	public int getNumberMine() {return numberMine;}
 	
 }
